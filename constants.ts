@@ -1,5 +1,4 @@
-
-import { Job, Article, ApplicationStatus } from './types';
+import { Job, Article } from './types.ts';
 
 export const CITIES = [
   "Casablanca", "Rabat", "Marrakech", "Tanger", "Agadir", "Fès", "Meknès", "Oujda", "Kénitra", "Tétouan"

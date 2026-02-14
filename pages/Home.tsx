@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
-import { MOCK_JOBS, CITIES, MOCK_ARTICLES } from '../constants';
-import JobCard from '../components/JobCard';
-import { Job } from '../types';
+import { MOCK_JOBS, CITIES, MOCK_ARTICLES } from '../constants.ts';
+import JobCard from '../components/JobCard.tsx';
+import { Job } from '../types.ts';
 
 const Home: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

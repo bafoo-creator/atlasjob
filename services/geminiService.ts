@@ -1,11 +1,17 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
-import { Job, Candidate } from "../types";
+import { Job, Candidate } from "../types.ts";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
+const getAIInstance = () => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    throw new Error("API_KEY non configurée.");
+  }
+  return new GoogleGenAI({ apiKey });
+};
 
 export const getJobMatchScore = async (job: Job, candidate: Candidate): Promise<{ score: number; reasoning: string }> => {
   try {
+    const ai = getAIInstance();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Analyse la compatibilité entre ce job et ce candidat pour le marché marocain.
@@ -25,17 +31,23 @@ export const getJobMatchScore = async (job: Job, candidate: Candidate): Promise<
       }
     });
 
-    return JSON.parse(response.text);
+    return JSON.parse(response.text || "{}");
   } catch (error) {
     console.error("Gemini Error:", error);
-    return { score: 50, reasoning: "Impossible d'analyser le score pour le moment." };
+    return { score: 50, reasoning: "Impossible d'analyser le score pour le moment (vérifiez la configuration API)." };
   }
 };
 
 export const optimizeCVText = async (cvContent: string): Promise<string> => {
-  const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
-    contents: `Tu es un expert en recrutement au Maroc. Optimise ce contenu de CV pour le rendre plus professionnel et impactant pour les recruteurs locaux: ${cvContent}`,
-  });
-  return response.text || "Erreur d'optimisation";
+  try {
+    const ai = getAIInstance();
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: `Tu es un expert en recrutement au Maroc. Optimise ce contenu de CV pour le rendre plus professionnel et impactant pour les recruteurs locaux: ${cvContent}`,
+    });
+    return response.text || "Erreur d'optimisation";
+  } catch (error) {
+    console.error("Gemini Error:", error);
+    return "L'optimisation IA est indisponible pour le moment.";
+  }
 };

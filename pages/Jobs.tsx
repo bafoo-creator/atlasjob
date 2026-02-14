@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
-import { MOCK_JOBS, CATEGORIES } from '../constants';
-import JobCard from '../components/JobCard';
-import { Job } from '../types';
+import { MOCK_JOBS, CATEGORIES } from '../constants.ts';
+import JobCard from '../components/JobCard.tsx';
+import { Job } from '../types.ts';
 
 const Jobs: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
