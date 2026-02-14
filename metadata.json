@@ -1,0 +1,8 @@
+{
+  "name": "ATLAS JOB - Plateforme de Recrutement Maghreb",
+  "description": "Une plateforme moderne de recrutement dédiée au marché marocain et maghrébin, offrant des outils de création de CV IA, un suivi de candidatures et un espace recruteur premium.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
